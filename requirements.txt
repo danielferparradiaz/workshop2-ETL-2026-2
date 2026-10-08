@@ -1,0 +1,5 @@
+pandas==2.2.3
+great-expectations==1.8.0
+SQLAlchemy==2.0.43
+psycopg2-binary==2.9.10
+pyarrow==19.0.1

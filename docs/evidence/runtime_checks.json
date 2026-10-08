@@ -1,0 +1,143 @@
+{
+  "versions": {
+    "apache-airflow": "3.1.8",
+    "great-expectations": "1.8.0",
+    "pandas": "2.2.3",
+    "SQLAlchemy": "2.0.43"
+  },
+  "dag_tasks": [
+    {
+      "task": "extract_spotify",
+      "downstream": [
+        "validate_spotify_raw"
+      ],
+      "retries": 0,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "validate_spotify_raw",
+      "downstream": [
+        "transform_and_integrate"
+      ],
+      "retries": 0,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "extract_grammys",
+      "downstream": [
+        "validate_grammys_raw"
+      ],
+      "retries": 2,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "validate_grammys_raw",
+      "downstream": [
+        "transform_and_integrate"
+      ],
+      "retries": 0,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "transform_and_integrate",
+      "downstream": [
+        "validate_prepared"
+      ],
+      "retries": 0,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "validate_prepared",
+      "downstream": [
+        "load_dw"
+      ],
+      "retries": 0,
+      "trigger_rule": "all_success"
+    },
+    {
+      "task": "load_dw",
+      "downstream": [],
+      "retries": 2,
+      "trigger_rule": "all_success"
+    }
+  ],
+  "fact_constraints": [
+    {
+      "conname": "fact_grammy_catalog_artist_key_fkey",
+      "definition": "FOREIGN KEY (artist_key) REFERENCES dw.dim_artist(artist_key)"
+    },
+    {
+      "conname": "fact_grammy_catalog_candidate_count_check",
+      "definition": "CHECK ((candidate_count >= 0))"
+    },
+    {
+      "conname": "fact_grammy_catalog_category_key_fkey",
+      "definition": "FOREIGN KEY (category_key) REFERENCES dw.dim_category(category_key)"
+    },
+    {
+      "conname": "fact_grammy_catalog_check",
+      "definition": "CHECK ((((matched = 1) AND (match_status = 'matched'::text) AND (candidate_count = 1) AND (track_key <> 0) AND (popularity IS NOT NULL) AND (energy IS NOT NULL) AND (danceability IS NOT NULL)) OR ((matched = 0) AND (track_key = 0) AND (popularity IS NULL) AND (energy IS NULL) AND (danceability IS NULL) AND (((match_status = 'unmatched'::text) AND (candidate_count = 0)) OR ((match_status = 'ambiguous'::text) AND (candidate_count > 1))))))"
+    },
+    {
+      "conname": "fact_grammy_catalog_danceability_check",
+      "definition": "CHECK (((danceability >= (0)::double precision) AND (danceability <= (1)::double precision)))"
+    },
+    {
+      "conname": "fact_grammy_catalog_energy_check",
+      "definition": "CHECK (((energy >= (0)::double precision) AND (energy <= (1)::double precision)))"
+    },
+    {
+      "conname": "fact_grammy_catalog_match_status_check",
+      "definition": "CHECK ((match_status = ANY (ARRAY['matched'::text, 'unmatched'::text, 'ambiguous'::text])))"
+    },
+    {
+      "conname": "fact_grammy_catalog_matched_check",
+      "definition": "CHECK ((matched = ANY (ARRAY[0, 1])))"
+    },
+    {
+      "conname": "fact_grammy_catalog_pkey",
+      "definition": "PRIMARY KEY (entry_key)"
+    },
+    {
+      "conname": "fact_grammy_catalog_popularity_check",
+      "definition": "CHECK (((popularity >= (0)::double precision) AND (popularity <= (100)::double precision)))"
+    },
+    {
+      "conname": "fact_grammy_catalog_source_row_id_key",
+      "definition": "UNIQUE (source_row_id)"
+    },
+    {
+      "conname": "fact_grammy_catalog_track_key_fkey",
+      "definition": "FOREIGN KEY (track_key) REFERENCES dw.dim_track(track_key)"
+    },
+    {
+      "conname": "fact_grammy_catalog_year_key_fkey",
+      "definition": "FOREIGN KEY (year_key) REFERENCES dw.dim_year(year_key)"
+    }
+  ],
+  "dw_counts": {
+    "dim_year": 62,
+    "dim_category": 2,
+    "dim_artist": 68,
+    "dim_track": 12,
+    "fact_grammy_catalog": 82
+  },
+  "category_metrics": [
+    {
+      "category": "Best Pop Solo Performance",
+      "entries": 13,
+      "matched_entries": 3,
+      "avg_popularity": 83.66666666666667,
+      "avg_energy": 0.42933333333333334,
+      "avg_danceability": 0.7196666666666666
+    },
+    {
+      "category": "Record Of The Year",
+      "entries": 69,
+      "matched_entries": 9,
+      "avg_popularity": 65.22222222222223,
+      "avg_energy": 0.4955555555555555,
+      "avg_danceability": 0.5806666666666666
+    }
+  ]
+}

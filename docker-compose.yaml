@@ -1,0 +1,84 @@
+name: workshop2-music
+x-airflow: &airflow
+  build: .
+  image: workshop2-airflow:3.1.8
+  user: "${AIRFLOW_UID:-50000}:0"
+  environment: &environment
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.api_fastapi.auth.managers.simple.simple_auth_manager.SimpleAuthManager
+    AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://workshop:${POSTGRES_PASSWORD:?Run scripts.configure}@postgres/airflow
+    AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_SECRET:?Run scripts.configure}
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-api-server:8080/execution/
+    AIRFLOW__CORE__PARALLELISM: "4"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    PYTHONPATH: /opt/airflow/project
+    PROJECT_ROOT: /opt/airflow/project
+    MUSIC_DB_URL: postgresql+psycopg2://workshop:${POSTGRES_PASSWORD}@postgres/music
+  volumes:
+    - ./dags:/opt/airflow/dags:ro
+    - ./src:/opt/airflow/project/src:ro
+    - ./scripts:/opt/airflow/project/scripts:ro
+    - ./sql:/opt/airflow/project/sql:ro
+    - ./data:/opt/airflow/project/data
+    - ./logs:/opt/airflow/logs
+    - ./docs/evidence:/opt/airflow/project/docs/evidence
+  depends_on:
+    postgres:
+      condition: service_healthy
+    airflow-init:
+      condition: service_completed_successfully
+services:
+  postgres:
+    image: postgres:16.6
+    environment:
+      POSTGRES_USER: workshop
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts.configure}
+      POSTGRES_DB: airflow
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./sql/bootstrap.sql:/docker-entrypoint-initdb.d/bootstrap.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U workshop -d airflow"]
+      interval: 5s
+      retries: 20
+  airflow-init:
+    <<: *airflow
+    command: version
+    environment:
+      <<: *environment
+      _AIRFLOW_DB_MIGRATE: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  airflow-api-server:
+    <<: *airflow
+    command: api-server
+    ports:
+      - "127.0.0.1:8082:8080"
+    healthcheck:
+      test: [CMD, curl, --fail, http://localhost:8080/api/v2/monitor/health]
+      interval: 20s
+      retries: 10
+  airflow-scheduler:
+    <<: *airflow
+    command: scheduler
+  airflow-dag-processor:
+    <<: *airflow
+    command: dag-processor
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    environment:
+      MUSIC_DB_URL: postgresql+psycopg2://workshop:${POSTGRES_PASSWORD}@postgres/music
+    ports:
+      - "127.0.0.1:8502:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+volumes:
+  postgres-data:

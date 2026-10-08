@@ -1,0 +1,5 @@
+Entradas = COUNTROWS(Entries)
+Coincidencias = SUM(Entries[matched])
+Cobertura % = DIVIDE([Coincidencias], [Entradas])
+Popularidad media = AVERAGE(Entries[popularity])
+Energia media = AVERAGE(Entries[energy])

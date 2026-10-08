@@ -1,0 +1,57 @@
+{
+  "run_id": "rerun_20261008T144933Z",
+  "scenario": "normal",
+  "dag_state": "success",
+  "tasks": [
+    {
+      "task_id": "extract_grammys",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:51:48.131406+00:00",
+      "end_date": "2026-10-08 14:51:49.225959+00:00"
+    },
+    {
+      "task_id": "extract_spotify",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:51:48.129303+00:00",
+      "end_date": "2026-10-08 14:51:50.264508+00:00"
+    },
+    {
+      "task_id": "load_dw",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:52:31.204257+00:00",
+      "end_date": "2026-10-08 14:52:55.570204+00:00"
+    },
+    {
+      "task_id": "transform_and_integrate",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:52:01.651593+00:00",
+      "end_date": "2026-10-08 14:52:18.050556+00:00"
+    },
+    {
+      "task_id": "validate_grammys_raw",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:51:50.344280+00:00",
+      "end_date": "2026-10-08 14:52:00.248608+00:00"
+    },
+    {
+      "task_id": "validate_prepared",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:52:18.365639+00:00",
+      "end_date": "2026-10-08 14:52:30.955045+00:00"
+    },
+    {
+      "task_id": "validate_spotify_raw",
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-08 14:51:50.439536+00:00",
+      "end_date": "2026-10-08 14:52:01.531487+00:00"
+    }
+  ],
+  "artifact_directory": "/opt/airflow/project/data/runs/df7e06230ef91855618587c6"
+}

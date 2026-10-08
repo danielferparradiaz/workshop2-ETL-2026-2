@@ -1,0 +1,17 @@
+{
+  "spotify_raw_rows": 114000,
+  "quarantined_rows": 1933,
+  "conflicting_track_ids": 720,
+  "eligible_unique_tracks": 89020,
+  "collapsed_repeated_rows": 23047,
+  "grammy_raw_rows": 4810,
+  "out_of_scope": 4728,
+  "scope_rows": 82,
+  "collapsed_grammy_duplicates": 0,
+  "prepared_rows": 82,
+  "match_states": {
+    "unmatched": 61,
+    "matched": 12,
+    "ambiguous": 9
+  }
+}

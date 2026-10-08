@@ -1,0 +1,12 @@
+{
+  "run_id": "failure_20261008T144933Z",
+  "source": "PostgreSQL/music/source.grammy",
+  "query": "SELECT * FROM source.grammy ORDER BY source_row_id",
+  "rows": 4810,
+  "import": {
+    "source_name": "grammy",
+    "sha256": "bae3d6613cb39adb597bb8864fb294144bd55cb452557536f324020266727d88",
+    "row_count": 4810,
+    "imported_at": "2026-10-08 14:48:34.444051+00:00"
+  }
+}

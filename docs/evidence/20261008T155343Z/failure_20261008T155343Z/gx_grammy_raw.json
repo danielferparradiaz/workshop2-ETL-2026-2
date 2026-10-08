@@ -1,0 +1,536 @@
+{
+  "layer": "grammy_raw",
+  "rows": 4810,
+  "gx_success": false,
+  "policy_success": true,
+  "critical_failures": [],
+  "validation_definition": "grammy_raw",
+  "suite": {
+    "name": "grammy_raw",
+    "id": "daa7d9b9-6a59-43ae-a281-2fad4ce7659b",
+    "expectations": [
+      {
+        "type": "expect_table_columns_to_match_set",
+        "kwargs": {
+          "column_set": [
+            "source_row_id",
+            "year",
+            "category",
+            "nominee",
+            "artist",
+            "winner"
+          ],
+          "exact_match": false
+        },
+        "meta": {
+          "rule_id": "grammy_raw-SCHEMA",
+          "severity": "Critical"
+        },
+        "id": "67863561-fbaf-429a-8731-d2527244dbec",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "min_value": 1
+        },
+        "meta": {
+          "rule_id": "grammy_raw-NONEMPTY",
+          "severity": "Critical"
+        },
+        "id": "8d457778-0188-4848-8a93-e54a94e07a1a",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_unique",
+        "kwargs": {
+          "column": "source_row_id"
+        },
+        "meta": {
+          "rule_id": "G02-id",
+          "severity": "Critical"
+        },
+        "id": "7da81fb2-0987-45b8-8825-805960279b92",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "source_row_id"
+        },
+        "meta": {
+          "rule_id": "G02-complete",
+          "severity": "Critical"
+        },
+        "id": "4326591d-0424-4128-bbd6-9ba84d8586ce",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "column": "year",
+          "regex": "^(19[5-9][0-9]|20[0-9]{2})$"
+        },
+        "meta": {
+          "rule_id": "G03",
+          "severity": "Critical"
+        },
+        "id": "fd2b0c91-839d-4869-889e-c203c3ba8a13",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "year"
+        },
+        "meta": {
+          "rule_id": "G03-complete",
+          "severity": "Critical"
+        },
+        "id": "dc36310b-d9c5-411d-847b-6f6fa1dd17e1",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "category"
+        },
+        "meta": {
+          "rule_id": "G04-complete",
+          "severity": "Critical"
+        },
+        "id": "173be60a-99fd-4cf3-9bef-4000988497c1",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "column": "category",
+          "regex": "\\S"
+        },
+        "meta": {
+          "rule_id": "G04",
+          "severity": "Critical"
+        },
+        "id": "bed41fab-040b-4c34-a6da-74e05f5c7a04",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_in_set",
+        "kwargs": {
+          "column": "_scope_identity_valid",
+          "value_set": [
+            true
+          ]
+        },
+        "meta": {
+          "rule_id": "G05",
+          "severity": "Critical"
+        },
+        "id": "93d32fcb-ea1e-4972-81be-05e5ccb5acfc",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_unique_value_count_to_be_between",
+        "kwargs": {
+          "column": "winner",
+          "min_value": 2,
+          "max_value": 2
+        },
+        "meta": {
+          "rule_id": "G06",
+          "severity": "Warning"
+        },
+        "id": "57428f26-0d81-4c5f-bdf9-eb5569710bf2",
+        "severity": "critical"
+      }
+    ],
+    "meta": {
+      "great_expectations_version": "1.8.0"
+    },
+    "notes": null
+  },
+  "gx_result": {
+    "success": false,
+    "results": [
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_table_columns_to_match_set",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column_set": [
+              "source_row_id",
+              "year",
+              "category",
+              "nominee",
+              "artist",
+              "winner"
+            ],
+            "exact_match": false
+          },
+          "meta": {
+            "rule_id": "grammy_raw-SCHEMA",
+            "severity": "Critical"
+          },
+          "id": "67863561-fbaf-429a-8731-d2527244dbec",
+          "severity": "critical"
+        },
+        "result": {
+          "observed_value": [
+            "_scope_identity_valid",
+            "artist",
+            "category",
+            "img",
+            "nominee",
+            "published_at",
+            "source_row_id",
+            "title",
+            "updated_at",
+            "winner",
+            "workers",
+            "year"
+          ],
+          "details": {
+            "mismatched": {
+              "unexpected": [
+                "_scope_identity_valid",
+                "img",
+                "published_at",
+                "title",
+                "updated_at",
+                "workers"
+              ]
+            }
+          }
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_table_row_count_to_be_between",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "min_value": 1
+          },
+          "meta": {
+            "rule_id": "grammy_raw-NONEMPTY",
+            "severity": "Critical"
+          },
+          "id": "8d457778-0188-4848-8a93-e54a94e07a1a",
+          "severity": "critical"
+        },
+        "result": {
+          "observed_value": 4810
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_unique",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "source_row_id"
+          },
+          "meta": {
+            "rule_id": "G02-id",
+            "severity": "Critical"
+          },
+          "id": "7da81fb2-0987-45b8-8825-805960279b92",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "source_row_id"
+          },
+          "meta": {
+            "rule_id": "G02-complete",
+            "severity": "Critical"
+          },
+          "id": "4326591d-0424-4128-bbd6-9ba84d8586ce",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_match_regex",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "year",
+            "regex": "^(19[5-9][0-9]|20[0-9]{2})$"
+          },
+          "meta": {
+            "rule_id": "G03",
+            "severity": "Critical"
+          },
+          "id": "fd2b0c91-839d-4869-889e-c203c3ba8a13",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "year"
+          },
+          "meta": {
+            "rule_id": "G03-complete",
+            "severity": "Critical"
+          },
+          "id": "dc36310b-d9c5-411d-847b-6f6fa1dd17e1",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "category"
+          },
+          "meta": {
+            "rule_id": "G04-complete",
+            "severity": "Critical"
+          },
+          "id": "173be60a-99fd-4cf3-9bef-4000988497c1",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_match_regex",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "category",
+            "regex": "\\S"
+          },
+          "meta": {
+            "rule_id": "G04",
+            "severity": "Critical"
+          },
+          "id": "bed41fab-040b-4c34-a6da-74e05f5c7a04",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_in_set",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "_scope_identity_valid",
+            "value_set": [
+              true
+            ]
+          },
+          "meta": {
+            "rule_id": "G05",
+            "severity": "Critical"
+          },
+          "id": "93d32fcb-ea1e-4972-81be-05e5ccb5acfc",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 4810,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_unique_value_count_to_be_between",
+          "kwargs": {
+            "batch_id": "music-grammy_raw",
+            "column": "winner",
+            "min_value": 2,
+            "max_value": 2
+          },
+          "meta": {
+            "rule_id": "G06",
+            "severity": "Warning"
+          },
+          "id": "57428f26-0d81-4c5f-bdf9-eb5569710bf2",
+          "severity": "critical"
+        },
+        "result": {
+          "observed_value": 1
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      }
+    ],
+    "suite_name": "grammy_raw",
+    "suite_parameters": {},
+    "statistics": {
+      "evaluated_expectations": 10,
+      "successful_expectations": 9,
+      "unsuccessful_expectations": 1,
+      "success_percent": 90.0
+    },
+    "meta": {
+      "great_expectations_version": "1.8.0",
+      "batch_spec": {
+        "batch_data": "PandasDataFrame"
+      },
+      "batch_markers": {
+        "ge_load_time": "20261008T155832.159628Z",
+        "pandas_data_fingerprint": "44a2d85301dc249990e530e0adaec238"
+      },
+      "active_batch_definition": {
+        "datasource_name": "music",
+        "data_connector_name": "fluent",
+        "data_asset_name": "grammy_raw",
+        "batch_identifiers": {
+          "dataframe": "<DATAFRAME>"
+        }
+      },
+      "validation_id": "66eba13a-7514-4b31-882a-f4fdbfa0f2ad",
+      "checkpoint_id": null,
+      "run_id": {
+        "run_name": null,
+        "run_time": "2026-10-08T15:58:32.475726+00:00"
+      },
+      "validation_time": "2026-10-08T15:58:32.475726+00:00",
+      "batch_parameters": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "id": null
+  }
+}

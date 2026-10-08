@@ -1,0 +1,36 @@
+{
+  "airflow_version": "3.1.8",
+  "baseline": "baseline_20261008T155343Z",
+  "failure": "failure_20261008T155343Z",
+  "rerun": "rerun_20261008T155343Z",
+  "before": {
+    "fact_count": 82,
+    "matched_count": 12,
+    "popularity_sum": 838.0,
+    "energy_sum": 5.748,
+    "content_sha256": "35c587916115d7007e1edc7a5fa3b4eb4cd9a8ab2f52c4385c41b83e8a334901"
+  },
+  "after_failure": {
+    "fact_count": 82,
+    "matched_count": 12,
+    "popularity_sum": 838.0,
+    "energy_sum": 5.748,
+    "content_sha256": "35c587916115d7007e1edc7a5fa3b4eb4cd9a8ab2f52c4385c41b83e8a334901"
+  },
+  "after_rerun": {
+    "fact_count": 82,
+    "matched_count": 12,
+    "popularity_sum": 838.0,
+    "energy_sum": 5.748,
+    "content_sha256": "35c587916115d7007e1edc7a5fa3b4eb4cd9a8ab2f52c4385c41b83e8a334901"
+  },
+  "unchanged_original": true,
+  "kpis": {
+    "entries": 82,
+    "matched_entries": 12,
+    "coverage_pct": "14.634146341463414634000",
+    "avg_popularity": 69.83333333333333,
+    "avg_energy": 0.47900000000000004
+  },
+  "evidence_directory": "/opt/airflow/project/docs/evidence/20261008T155343Z"
+}

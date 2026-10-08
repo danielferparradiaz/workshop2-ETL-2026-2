@@ -1,0 +1,8 @@
+{
+  "csv_rows": 4810,
+  "db_rows": 4810,
+  "all_values_equal": true,
+  "sha256": "bae3d6613cb39adb597bb8864fb294144bd55cb452557536f324020266727d88",
+  "table": "source.grammy",
+  "database": "music"
+}

@@ -1,0 +1,9 @@
+* text=auto
+*.py text eol=lf
+*.sql text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.ipynb text eol=lf
+*.png binary
+# Preserve original dataset bytes and SHA-256 across Windows/macOS checkouts.
+data/input/*.csv binary

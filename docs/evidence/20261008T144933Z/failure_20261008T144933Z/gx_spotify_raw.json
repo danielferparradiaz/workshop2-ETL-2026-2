@@ -1,0 +1,841 @@
+{
+  "layer": "spotify_raw",
+  "rows": 114000,
+  "gx_success": false,
+  "policy_success": false,
+  "critical_failures": [
+    "S05-popularity"
+  ],
+  "validation_definition": "spotify_raw",
+  "suite": {
+    "name": "spotify_raw",
+    "id": "5afdbd8d-7844-4b8c-a78a-3724ed8fe42e",
+    "expectations": [
+      {
+        "type": "expect_table_columns_to_match_set",
+        "kwargs": {
+          "column_set": [
+            "track_id",
+            "track_name",
+            "artists",
+            "popularity",
+            "energy",
+            "danceability"
+          ],
+          "exact_match": false
+        },
+        "meta": {
+          "rule_id": "spotify_raw-SCHEMA",
+          "severity": "Critical"
+        },
+        "id": "41c73fb0-3fcb-4b8c-b50e-ca885a7c7953",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "min_value": 1
+        },
+        "meta": {
+          "rule_id": "spotify_raw-NONEMPTY",
+          "severity": "Critical"
+        },
+        "id": "76bfe031-ec57-448c-b45a-248e7d53ffe5",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "track_id"
+        },
+        "meta": {
+          "rule_id": "S02",
+          "severity": "Critical"
+        },
+        "id": "bdbb229b-2d02-4531-ad26-b86df8d28598",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "column": "track_id",
+          "regex": "^[A-Za-z0-9]{22}$"
+        },
+        "meta": {
+          "rule_id": "S02-format",
+          "severity": "Critical"
+        },
+        "id": "0bd869ef-4ebf-4b03-84b8-99e1d4c2165d",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_unique",
+        "kwargs": {
+          "column": "track_id"
+        },
+        "meta": {
+          "rule_id": "S03",
+          "severity": "Warning"
+        },
+        "id": "cbc9e0f7-4772-4fcb-82f3-0d3b6bc1f877",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "track_name"
+        },
+        "meta": {
+          "rule_id": "S04-track_name",
+          "severity": "Warning"
+        },
+        "id": "fe574fad-5b4f-4e5d-aaa1-b8a1afa9cf65",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "artists"
+        },
+        "meta": {
+          "rule_id": "S04-artists",
+          "severity": "Warning"
+        },
+        "id": "8dbba3ff-0547-4874-8465-9776dd20fceb",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "popularity"
+        },
+        "meta": {
+          "rule_id": "S05-popularity-complete",
+          "severity": "Critical"
+        },
+        "id": "166cd807-e0be-4941-b1d4-23979a527ca9",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "popularity",
+          "min_value": 0.0,
+          "max_value": 100.0
+        },
+        "meta": {
+          "rule_id": "S05-popularity",
+          "severity": "Critical"
+        },
+        "id": "8f7edb91-0284-4c4f-8f48-4d566807bba1",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "energy"
+        },
+        "meta": {
+          "rule_id": "S05-energy-complete",
+          "severity": "Critical"
+        },
+        "id": "1ff3b277-2ae0-4683-af78-9d7e01513c4e",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "energy",
+          "min_value": 0.0,
+          "max_value": 1.0
+        },
+        "meta": {
+          "rule_id": "S05-energy",
+          "severity": "Critical"
+        },
+        "id": "5e2f08bf-9a6d-4e61-ae9f-542f8f1772cf",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "danceability"
+        },
+        "meta": {
+          "rule_id": "S05-danceability-complete",
+          "severity": "Critical"
+        },
+        "id": "e1201f71-59dd-462e-bde5-b990f9e48c06",
+        "severity": "critical"
+      },
+      {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "danceability",
+          "min_value": 0.0,
+          "max_value": 1.0
+        },
+        "meta": {
+          "rule_id": "S05-danceability",
+          "severity": "Critical"
+        },
+        "id": "f55c5a7c-5b89-4585-93bf-6613645e8c40",
+        "severity": "critical"
+      }
+    ],
+    "meta": {
+      "great_expectations_version": "1.8.0"
+    },
+    "notes": null
+  },
+  "gx_result": {
+    "success": false,
+    "results": [
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_table_columns_to_match_set",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column_set": [
+              "track_id",
+              "track_name",
+              "artists",
+              "popularity",
+              "energy",
+              "danceability"
+            ],
+            "exact_match": false
+          },
+          "meta": {
+            "rule_id": "spotify_raw-SCHEMA",
+            "severity": "Critical"
+          },
+          "id": "41c73fb0-3fcb-4b8c-b50e-ca885a7c7953",
+          "severity": "critical"
+        },
+        "result": {
+          "observed_value": [
+            "Unnamed: 0",
+            "acousticness",
+            "album_name",
+            "artists",
+            "danceability",
+            "duration_ms",
+            "energy",
+            "explicit",
+            "instrumentalness",
+            "key",
+            "liveness",
+            "loudness",
+            "mode",
+            "popularity",
+            "speechiness",
+            "tempo",
+            "time_signature",
+            "track_genre",
+            "track_id",
+            "track_name",
+            "valence"
+          ],
+          "details": {
+            "mismatched": {
+              "unexpected": [
+                "Unnamed: 0",
+                "acousticness",
+                "album_name",
+                "duration_ms",
+                "explicit",
+                "instrumentalness",
+                "key",
+                "liveness",
+                "loudness",
+                "mode",
+                "speechiness",
+                "tempo",
+                "time_signature",
+                "track_genre",
+                "valence"
+              ]
+            }
+          }
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_table_row_count_to_be_between",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "min_value": 1
+          },
+          "meta": {
+            "rule_id": "spotify_raw-NONEMPTY",
+            "severity": "Critical"
+          },
+          "id": "76bfe031-ec57-448c-b45a-248e7d53ffe5",
+          "severity": "critical"
+        },
+        "result": {
+          "observed_value": 114000
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "track_id"
+          },
+          "meta": {
+            "rule_id": "S02",
+            "severity": "Critical"
+          },
+          "id": "bdbb229b-2d02-4531-ad26-b86df8d28598",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_match_regex",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "track_id",
+            "regex": "^[A-Za-z0-9]{22}$"
+          },
+          "meta": {
+            "rule_id": "S02-format",
+            "severity": "Critical"
+          },
+          "id": "0bd869ef-4ebf-4b03-84b8-99e1d4c2165d",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_unique",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "track_id"
+          },
+          "meta": {
+            "rule_id": "S03",
+            "severity": "Warning"
+          },
+          "id": "cbc9e0f7-4772-4fcb-82f3-0d3b6bc1f877",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 40900,
+          "unexpected_percent": 35.877192982456144,
+          "partial_unexpected_list": [
+            "5SuOikwiRyPMVoIQDJUgSV",
+            "4qPNDBW1i3p13qLCt0Ki3A",
+            "01MVOl9KtVTNfFiBU9I7dc",
+            "6Vc5wAMmXdKIAM7WUoEb7N",
+            "1EzrEOXmMH3G43AXT1y7pA",
+            "7k9GuJYLp2AzqokyEdwEw2",
+            "4ptDJbJl35d7gQfeNteBwp",
+            "0X9MxHR1rTkEHDjp95F2OO",
+            "6xKeQgzfjixSUld14qUezm",
+            "4Yo0igmcoNyat1secaH0OD",
+            "5TvE3pk05pyFIGdSY9j4DJ",
+            "0BUuuEvNa5T4lMaewyiudB",
+            "3Hn3LfhrQOaKihdCibJsTs",
+            "6D33wCKzWtNEgOovgeVJ7r",
+            "5IfCZDRXZrqZSm8AwE44PG",
+            "0dzKBptH2P5j5a0MifBMwM",
+            "5QAMZTM5cmLg3fHX9ZbTZi",
+            "2qESE1ZeWly7I3YjyTXmXh",
+            "3EQV1ZHtHvq9OnVRYIdbg3",
+            "3ax0rfGb7exLtl02LL08U9"
+          ],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 35.877192982456144,
+          "unexpected_percent_nonmissing": 35.877192982456144,
+          "partial_unexpected_counts": [
+            {
+              "value": "01MVOl9KtVTNfFiBU9I7dc",
+              "count": 1
+            },
+            {
+              "value": "0BUuuEvNa5T4lMaewyiudB",
+              "count": 1
+            },
+            {
+              "value": "0X9MxHR1rTkEHDjp95F2OO",
+              "count": 1
+            },
+            {
+              "value": "0dzKBptH2P5j5a0MifBMwM",
+              "count": 1
+            },
+            {
+              "value": "1EzrEOXmMH3G43AXT1y7pA",
+              "count": 1
+            },
+            {
+              "value": "2qESE1ZeWly7I3YjyTXmXh",
+              "count": 1
+            },
+            {
+              "value": "3EQV1ZHtHvq9OnVRYIdbg3",
+              "count": 1
+            },
+            {
+              "value": "3Hn3LfhrQOaKihdCibJsTs",
+              "count": 1
+            },
+            {
+              "value": "3ax0rfGb7exLtl02LL08U9",
+              "count": 1
+            },
+            {
+              "value": "4Yo0igmcoNyat1secaH0OD",
+              "count": 1
+            },
+            {
+              "value": "4ptDJbJl35d7gQfeNteBwp",
+              "count": 1
+            },
+            {
+              "value": "4qPNDBW1i3p13qLCt0Ki3A",
+              "count": 1
+            },
+            {
+              "value": "5IfCZDRXZrqZSm8AwE44PG",
+              "count": 1
+            },
+            {
+              "value": "5QAMZTM5cmLg3fHX9ZbTZi",
+              "count": 1
+            },
+            {
+              "value": "5SuOikwiRyPMVoIQDJUgSV",
+              "count": 1
+            },
+            {
+              "value": "5TvE3pk05pyFIGdSY9j4DJ",
+              "count": 1
+            },
+            {
+              "value": "6D33wCKzWtNEgOovgeVJ7r",
+              "count": 1
+            },
+            {
+              "value": "6Vc5wAMmXdKIAM7WUoEb7N",
+              "count": 1
+            },
+            {
+              "value": "6xKeQgzfjixSUld14qUezm",
+              "count": 1
+            },
+            {
+              "value": "7k9GuJYLp2AzqokyEdwEw2",
+              "count": 1
+            }
+          ],
+          "partial_unexpected_index_list": [
+            0,
+            1,
+            5,
+            6,
+            7,
+            9,
+            12,
+            13,
+            16,
+            17,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ]
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "track_name"
+          },
+          "meta": {
+            "rule_id": "S04-track_name",
+            "severity": "Warning"
+          },
+          "id": "fe574fad-5b4f-4e5d-aaa1-b8a1afa9cf65",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 1,
+          "unexpected_percent": 0.0008771929824561403,
+          "partial_unexpected_list": [
+            null
+          ],
+          "partial_unexpected_counts": [
+            {
+              "value": null,
+              "count": 1
+            }
+          ],
+          "partial_unexpected_index_list": [
+            65900
+          ]
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "artists"
+          },
+          "meta": {
+            "rule_id": "S04-artists",
+            "severity": "Warning"
+          },
+          "id": "8dbba3ff-0547-4874-8465-9776dd20fceb",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 1,
+          "unexpected_percent": 0.0008771929824561403,
+          "partial_unexpected_list": [
+            null
+          ],
+          "partial_unexpected_counts": [
+            {
+              "value": null,
+              "count": 1
+            }
+          ],
+          "partial_unexpected_index_list": [
+            65900
+          ]
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "popularity"
+          },
+          "meta": {
+            "rule_id": "S05-popularity-complete",
+            "severity": "Critical"
+          },
+          "id": "166cd807-e0be-4941-b1d4-23979a527ca9",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_between",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "popularity",
+            "min_value": 0.0,
+            "max_value": 100.0
+          },
+          "meta": {
+            "rule_id": "S05-popularity",
+            "severity": "Critical"
+          },
+          "id": "8f7edb91-0284-4c4f-8f48-4d566807bba1",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 1,
+          "unexpected_percent": 0.0008771929824561403,
+          "partial_unexpected_list": [
+            101
+          ],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0008771929824561403,
+          "unexpected_percent_nonmissing": 0.0008771929824561403,
+          "partial_unexpected_counts": [
+            {
+              "value": 101,
+              "count": 1
+            }
+          ],
+          "partial_unexpected_index_list": [
+            0
+          ]
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "energy"
+          },
+          "meta": {
+            "rule_id": "S05-energy-complete",
+            "severity": "Critical"
+          },
+          "id": "1ff3b277-2ae0-4683-af78-9d7e01513c4e",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_between",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "energy",
+            "min_value": 0.0,
+            "max_value": 1.0
+          },
+          "meta": {
+            "rule_id": "S05-energy",
+            "severity": "Critical"
+          },
+          "id": "5e2f08bf-9a6d-4e61-ae9f-542f8f1772cf",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "danceability"
+          },
+          "meta": {
+            "rule_id": "S05-danceability-complete",
+            "severity": "Critical"
+          },
+          "id": "e1201f71-59dd-462e-bde5-b990f9e48c06",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_between",
+          "kwargs": {
+            "batch_id": "music-spotify_raw",
+            "column": "danceability",
+            "min_value": 0.0,
+            "max_value": 1.0
+          },
+          "meta": {
+            "rule_id": "S05-danceability",
+            "severity": "Critical"
+          },
+          "id": "f55c5a7c-5b89-4585-93bf-6613645e8c40",
+          "severity": "critical"
+        },
+        "result": {
+          "element_count": 114000,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": [],
+          "partial_unexpected_index_list": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      }
+    ],
+    "suite_name": "spotify_raw",
+    "suite_parameters": {},
+    "statistics": {
+      "evaluated_expectations": 13,
+      "successful_expectations": 9,
+      "unsuccessful_expectations": 4,
+      "success_percent": 69.23076923076923
+    },
+    "meta": {
+      "great_expectations_version": "1.8.0",
+      "batch_spec": {
+        "batch_data": "PandasDataFrame"
+      },
+      "batch_markers": {
+        "ge_load_time": "20261008T145133.707920Z",
+        "pandas_data_fingerprint": "31e9bbfda16e0047777107d47a1c36da"
+      },
+      "active_batch_definition": {
+        "datasource_name": "music",
+        "data_connector_name": "fluent",
+        "data_asset_name": "spotify_raw",
+        "batch_identifiers": {
+          "dataframe": "<DATAFRAME>"
+        }
+      },
+      "validation_id": "3829d067-af1a-4b57-946a-dd18d42d40e6",
+      "checkpoint_id": null,
+      "run_id": {
+        "run_name": null,
+        "run_time": "2026-10-08T14:51:34.780917+00:00"
+      },
+      "validation_time": "2026-10-08T14:51:34.780917+00:00",
+      "batch_parameters": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "id": null
+  }
+}

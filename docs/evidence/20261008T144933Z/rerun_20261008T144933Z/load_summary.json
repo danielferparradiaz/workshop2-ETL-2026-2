@@ -1,0 +1,16 @@
+{
+  "run_id": "rerun_20261008T144933Z",
+  "before": {
+    "fact_count": 82,
+    "matched_count": 12,
+    "popularity_sum": 838.0,
+    "energy_sum": 5.748
+  },
+  "after": {
+    "fact_count": 82,
+    "matched_count": 12,
+    "popularity_sum": 838.0,
+    "energy_sum": 5.748
+  },
+  "strategy": "transactional_full_snapshot"
+}

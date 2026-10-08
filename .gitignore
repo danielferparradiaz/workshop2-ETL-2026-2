@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+data/input/*.csv
+!data/input/spotify_dataset.csv
+!data/input/the_grammy_awards.csv
+data/runs/
+logs/
+*.pyc
+.DS_Store
