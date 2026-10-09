@@ -157,6 +157,76 @@ Las validaciones y transformaciones deterministas tienen 0 retries; extracción 
 
 ![Dashboard conectado al DW](docs/evidence/screenshots/dashboard.png)
 
+## Cumplimiento del enunciado
+
+Cobertura explícita de `ETL/ETL_2026-2_Workshop-2.pdf`. Cada requisito del enunciado se responde en una sección o artefacto del repositorio; una falta de prueba exigida equivaldría a una capacidad de sistema ausente, no a un vacío de documentación.
+
+### Requisitos de README (§9.2 del enunciado)
+
+| Requisito | Dónde se responde |
+|---|---|
+| Problema y objetivo analítico | [Objetivo y alcance](#objetivo-y-alcance) |
+| Requerimientos analíticos | [Requerimientos y atributos](docs/requirements.md) (AR1–AR3) |
+| Fuentes de datos | [Fuentes y hallazgos](#fuentes-y-hallazgos) · [manifiesto original](docs/evidence/input_manifest.json) |
+| Arquitectura del pipeline | [Arquitectura](#arquitectura) · [diagrama y límites](docs/architecture.md) |
+| Hallazgos de perfilamiento | [notebook ejecutado](notebooks/data_profiling.ipynb) · [riesgos](docs/profiling_findings.md) · [perfil JSON](docs/evidence/profile.json) |
+| Riesgos de calidad y reglas | [tabla de reglas, métricas, umbrales y severidades](docs/quality_rules.md) |
+| Diseño de validación GX | [ejecución GX](docs/quality_rules.md) (Suites, Validation Definitions y resultado) |
+| Estrategia de transformación e integración | [contrato de integración](docs/integration.md) |
+| Modelo dimensional | [modelo](docs/model.md) · [DDL ejecutable](sql/dw_schema.sql) |
+| Diseño del DAG Airflow | [dags/reliable_music_pipeline.py](dags/reliable_music_pipeline.py) · [política en arquitectura](docs/architecture.md) · [chequeos de runtime](docs/evidence/runtime_checks.json) |
+| Política de fallos y retries | [tabla de fallos y retries](docs/architecture.md) |
+| Evidencia de ejecución exitosa | Test A (baseline) en [Evidencias](#evidencias-y-resultados) |
+| Evidencia de fallo controlado | Test B (failure) en [Evidencias](#evidencias-y-resultados) |
+| Estrategia de repetibilidad | [carga idempotente](docs/model.md) · [hash del DW](docs/evidence/latest_reliability.json) |
+| Dashboard y salidas analíticas | [dashboard y KPIs](docs/dashboard.md) · consultas en `sql/analytics.sql` |
+| Instrucciones de instalación y ejecución | [Preparar y ejecutar (PowerShell)](#preparar-y-ejecutar-powershell) · [macOS](docs/macos.md) |
+| Supuestos y limitaciones | [Supuestos y limitaciones](#supuestos-y-limitaciones) |
+
+### Evidencias requeridas (§4–§8)
+
+| Evidencia pedida | Artefacto |
+|---|---|
+| Extracción Grammy desde base relacional, no del CSV | [source_import.json](docs/evidence/source_import.json) · `extract_grammys` hace SELECT sobre `source.grammy` |
+| Tabla de requerimientos, alcance y trazabilidad | [requirements.md](docs/requirements.md) · [traceability.md](docs/traceability.md) |
+| Perfilamiento reproducible de ambas fuentes | [notebook](notebooks/data_profiling.ipynb) · [profile.json](docs/evidence/profile.json) |
+| Mapeo de cada Expectation a su Rule ID y resultados | [quality_rules.md](docs/quality_rules.md) · `gx_spotify_raw.json`, `gx_grammy_raw.json`, `gx_prepared.json` por run |
+| Gates raw exitosos y un fallo crítico controlado | Test B: `S05-popularity` en [gx_spotify_raw.json](docs/evidence/20261008T155343Z/failure_20261008T155343Z/gx_spotify_raw.json) |
+| Fallo crítico ligado a su Rule ID, estado y log | [evidence/README.md](docs/evidence/README.md) (E06–E07) · `task_logs/` del run failure |
+| Suite de preparado distinta y carga bloqueada por su Critical | `gx_prepared.json` · dependencia `load_dw ← validate_prepared` |
+| KPIs y visualizaciones consultando el DW | `dw.v_entries`, `dw.v_kpis` · [screenshot del dashboard](docs/evidence/screenshots/dashboard.png) |
+| Conjunto mínimo de evidencia (§8.3) | [registro E01–E12](docs/evidence/README.md) |
+
+### Diseño de validación GX (§6.6)
+
+| Elemento | Implementación |
+|---|---|
+| Expectation | Reglas en [src/validation.py](src/validation.py) con `meta.rule_id` y `meta.severity` |
+| Expectation Suite | Una suite por capa: `spotify_raw`, `grammy_raw`, `prepared` |
+| Validation Definition | Contexto ephemeral + DataFrame Asset + Batch Definition, asociados con `gx.ValidationDefinition` |
+| Ejecución controlada | `ValidationDefinition.run` (equivalente al Checkpoint), con política Critical detiene / Warning registra |
+| Resultado | Success global y evidencia por regla (métricas y muestras) conservados en `gx_<capa>.json` |
+
+### Pruebas obligatorias de confiabilidad (§7)
+
+| Prueba | Run preservado | Resultado verificado |
+|---|---|---|
+| Test A · éxito | `baseline_20261008T144933Z` y `baseline_20261008T155343Z` | 7 tareas success; carga de 82 hechos |
+| Test B · fallo crítico controlado | `failure_20261008T144933Z` y `failure_20261008T155343Z` (`scenario=invalid_popularity`) | `validate_spotify_raw` falla por `S05-popularity` (101); downstream `upstream_failed` con 0 intentos |
+| Test C · rerun seguro | `rerun_20261008T144933Z` y `rerun_20261008T155343Z` | Mismos conteos, sumas de control y SHA-256 del contenido del DW |
+
+### Criterios de evaluación (§10.1)
+
+| Criterio | Evidencia en el repositorio |
+|---|---|
+| Requerimientos analíticos y arquitectura (0,40) | [requirements](docs/requirements.md) · [traceability](docs/traceability.md) · [architecture](docs/architecture.md) |
+| Perfilamiento y análisis de riesgo (0,60) | [notebook](notebooks/data_profiling.ipynb) · [profile.json](docs/evidence/profile.json) · [riesgos](docs/profiling_findings.md) |
+| ETL, transformación e integración (0,60) | [contrato](docs/integration.md) · `reconciliation.json` y `match_candidates.json` por run |
+| Validación automática con GX (0,80) | [reglas](docs/quality_rules.md) · resultados `gx_*` de raw y prepared |
+| Orquestación y confiabilidad Airflow (0,90) | [DAG](dags/reliable_music_pipeline.py) · fallos/retries · Tests A/B/C con capturas y logs |
+| DW dimensional y analítica (0,40) | [modelo](docs/model.md) · [dw_schema.sql](sql/dw_schema.sql) · [dashboard](docs/dashboard.md) |
+| Repositorio y documentación (0,30) | README · `.env.example` · estructura documentada · [registro de evidencias](docs/evidence/README.md) |
+
 ## Organización
 
 ```text
